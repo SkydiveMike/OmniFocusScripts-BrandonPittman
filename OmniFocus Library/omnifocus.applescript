@@ -38,19 +38,19 @@ end parse
 
 --» find
 on findContext(contextName)
-	first flattened context of default document whose name is contextName and hidden is false
+	first flattened tag of default document whose name is contextName and hidden is false
 end findContext
 
 on findContextStarts(contextName)
-	first flattened context of default document whose name starts with contextName and hidden is false
+	first flattened tag of default document whose name starts with contextName and hidden is false
 end findContextStarts
 
 on findContextEnds(contextName)
-	first flattened context of default document whose name ends with contextName and hidden is false
+	first flattened tag of default document whose name ends with contextName and hidden is false
 end findContextEnds
 
 on findContextContains(contextName)
-	first flattened context of default document whose name contains contextName and hidden is false
+	first flattened tag of default document whose name contains contextName and hidden is false
 end findContextContains
 
 on findProject(projectName)
@@ -111,19 +111,19 @@ end findTaskContains
 
 --» findAll
 on findAllContexts(contextName)
-	every flattened context of default document whose name is contextName and hidden is false
+	every flattened tag of default document whose name is contextName and hidden is false
 end findAllContexts
 
 on findAllContextsStarts(contextName)
-	every flattened context of default document whose name starts with contextName and hidden is false
+	every flattened tag of default document whose name starts with contextName and hidden is false
 end findAllContextsStarts
 
 on findAllContextsEnds(contextName)
-	every flattened context of default document whose name ends with contextName and hidden is false
+	every flattened tag of default document whose name ends with contextName and hidden is false
 end findAllContextsEnds
 
 on findAllContextsContains(contextName)
-	every flattened context of default document whose name contains contextName and hidden is false
+	every flattened tag of default document whose name contains contextName and hidden is false
 end findAllContextsContains
 
 on findAllProjects(projectName)
@@ -193,7 +193,7 @@ on allProjects()
 end allProjects
 
 on allContexts()
-	every flattened context of default document whose hidden is false
+	every flattened tag of default document whose hidden is false
 end allContexts
 
 --» setSomething
@@ -227,7 +227,7 @@ on setContext(input, contextInput)
 		set theContext to contextInput
 	end if
 	repeat with _input in flatten(input)
-		set context of _input to theContext
+		set deprecated context of _input to theContext
 	end repeat
 end setContext
 
@@ -488,13 +488,13 @@ end toggleConditional
 on setConsider(input)
 	setPrefix(input, "Consider")
 	setRepeat(input, DEFER_DAILY)
-	setContext(input, (first flattened context whose name starts with "Consider" and hidden is false) of default document)
+	setContext(input, (first flattened tag whose name starts with "Consider" and hidden is false) of default document)
 end setConsider
 
 on clearConsider(input)
 	clearPrefix(input, "Consider")
 	clearRepeat(input)
-	setContext(input, context of parent task of item 1 of input)
+	setContext(input, deprecated context of parent task of item 1 of input)
 end clearConsider
 
 on toggleConsider(input)
@@ -521,7 +521,7 @@ on kindOf(input)
 		else if isTask(input) then
 			return task
 		else if isContext(input) then
-			return context
+			return deprecated context
 		else if isFolder(input) then
 			return folder
 		end if
@@ -540,7 +540,7 @@ end isProject
 
 on isContext(input)
 	using terms from application "OmniFocus"
-		if class of input is context then
+		if class of input is deprecated context then
 			return true
 		else
 			return false
