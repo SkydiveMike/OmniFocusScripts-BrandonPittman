@@ -280,7 +280,11 @@ end toggleSequential
 -->> Creating Flow with OmniFocus
 
 on openPerspective(perspectiveName)
-	set perspective name of front window of application "OmniFocus" to perspectiveName
+	tell application "OmniFocus"
+		tell default document
+			make new document window with properties {perspective name:perspectiveName}
+		end tell
+	end tell
 end openPerspective
 
 on inboxCount()
